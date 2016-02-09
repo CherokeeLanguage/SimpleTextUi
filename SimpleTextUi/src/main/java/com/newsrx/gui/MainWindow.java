@@ -143,11 +143,6 @@ public class MainWindow implements Runnable {
 		log.warning("");
 		log.warning("= " + config.getApptitle());
 		log.warning("");
-		log.warning("- Master project is in Eclipse as the Gradle project: '" + config.getApptitle() + "'");
-		log.warning("");
-		log.warning("- Don't forget to keep the git repository synchronized via commit/push/pull when making changes.");
-		log.warning("");
-		log.warning("");
 	}
 
 	@Override
