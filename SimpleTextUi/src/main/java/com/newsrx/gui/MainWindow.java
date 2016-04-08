@@ -19,7 +19,7 @@ import javax.swing.JTextPane;
 public class MainWindow implements Runnable {
 
 	public static abstract class Config {
-		public abstract Thread getApp(String... args) throws Exception;
+		public abstract Runnable getApp(String... args) throws Exception;
 
 		public File getReportPathFile() {
 			File f = new File(System.getProperty("user.home","")+"/JavaPrograms");
@@ -147,17 +147,10 @@ public class MainWindow implements Runnable {
 
 	@Override
 	public void run() {
-		log.info("MainWindow#run");
-		Thread app;
 		try {
-			app = config.getApp(args);
+			new Thread(config.getApp(args)).start();
 		} catch (Exception e) {
-			e.printStackTrace();
 			throw new RuntimeException(e);
-		} finally {
-			System.out.flush();
-			System.err.flush();
 		}
-		app.start();
 	}
 }
