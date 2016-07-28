@@ -72,7 +72,7 @@ project.afterEvaluate {
 eclipse {
 	project {
 		name = 'SimpleTextUi'
-		natures 'org.springsource.ide.eclipse.gradle.core.nature'
+		natures 'org.eclipse.buildship.core.gradleprojectnature'
 	}
 
 	classpath {
