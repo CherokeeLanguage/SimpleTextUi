@@ -10,8 +10,8 @@ repositories {
 }
 
 dependencies {
-  compile 'com.github.michael-joyner:SimpleTextUi:20170731'
+  compile 'com.github.michael-joyner:SimpleTextUi:20160731'
 }
 ```
 
-For Maven, etc, visit https://jitpack.io/#michael-joyner/SimpleTextUi/20170731 for instructions.
+For Maven, etc, visit https://jitpack.io/#michael-joyner/SimpleTextUi/20160731 for instructions.
