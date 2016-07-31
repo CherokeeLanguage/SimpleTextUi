@@ -6,7 +6,7 @@ group = 'com.github.michael-joyner'
 sourceCompatibility = 1.7
 compileJava.options.encoding = 'UTF-8'
 
-version '20160731'
+version '20160801'
 
 def RTJAR = '/usr/lib/jvm/java-7-openjdk-amd64/jre/lib/rt.jar';
 if (new File(RTJAR).exists()) {
