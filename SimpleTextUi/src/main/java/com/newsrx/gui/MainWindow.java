@@ -6,11 +6,14 @@ import java.awt.GraphicsDevice;
 import java.awt.GraphicsEnvironment;
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.io.PrintStream;
 import java.io.UnsupportedEncodingException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.GregorianCalendar;
+import java.util.logging.Logger;
 
 import javax.swing.JFrame;
 import javax.swing.JScrollPane;
@@ -58,40 +61,65 @@ public class MainWindow implements Runnable {
 
 	private final Config config;
 	private String[] args;
-	private final FakeLogger log;
+	protected Logger log;
 
 	/**
 	 * Create the application.<br/>
 	 * Use: EventQueue.invokeLater(new MainWindow(config, args));
 	 * 
 	 * @param args
+	 * @throws IOException 
 	 */
-	public MainWindow(Config config, String... args) {
-		log=new FakeLogger();
+	public MainWindow(Config config, String... args) throws IOException {
 		if (args != null) {
 			this.args = args;
 		} else {
 			this.args = new String[0];
 		}
 		this.config = config;
+		
+		Calendar cal = GregorianCalendar.getInstance();
+		Date today = cal.getTime();
+		SimpleDateFormat date_format = new SimpleDateFormat("yyyyMMdd-HHmm");
+		
+		frame = new JFrame();
+		
+		try {
+			String tag = config.getApptitle();
+			if (tag==null) {
+				tag="";
+			}
+			tag=tag.replaceAll(" ", "_");
+			tag=tag.toLowerCase();
+			tag=tag.replaceAll("[^a-z0-9\\-_]", "");
+			if (!tag.isEmpty()) {
+				tag=tag+"-";
+			}
+			config.getReportPathFile().mkdirs();
+			File file = new File(config.getReportPathFile(), tag + date_format.format(today) + "-log.odt");
+			logfile = new PrintStream(file, "UTF-8");
+		} catch (FileNotFoundException | UnsupportedEncodingException e) {
+			logfile = null;
+		}
+
 		initialize();
 	}
 
 	public static PrintStream logfile;
 
+	JScrollPane scrollPane = new JScrollPane();
+	JTextPane txtpnStartup = new JTextPane();
 	/**
 	 * Initialize the contents of the frame.
+	 * @throws IOException 
 	 * 
 	 * @throws FileNotFoundException
 	 * @throws UnsupportedEncodingException
 	 */
-	private void initialize() {
+	private void initialize() throws IOException {
 		Calendar cal = Calendar.getInstance();
 		Date today = cal.getTime();
 		SimpleDateFormat date_format = new SimpleDateFormat("yyyyMMdd-HHmm");
-
-		JScrollPane scrollPane = new JScrollPane();
-		JTextPane txtpnStartup = new JTextPane();
 
 		frame = new JFrame();
 		frame.setVisible(true);
@@ -120,12 +148,10 @@ public class MainWindow implements Runnable {
 		}
 		GraphicsDevice gd = GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice();
 		int screen_width = gd.getDisplayMode().getWidth();
-		int width = screen_width * 75 / 100;
+		int width = screen_width * 85 / 100;
 		int screen_height = gd.getDisplayMode().getHeight();
-		int height = screen_height * 75 / 100;
-		log.info("display size: " + screen_width + "x" + screen_height);
-		log.info("frame size: " + width + "x" + height);
-
+		int height = screen_height * 85 / 100;
+		
 		frame.setTitle(config.getApptitle());
 		frame.setBounds((screen_width - width) / 2, (screen_height - height) / 2, width, height);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -134,15 +160,12 @@ public class MainWindow implements Runnable {
 		
 		TeeStream tee_stdout = new TeeStream(System.out, logfile);
 		TeeStream tee_stderr = new TeeStream(System.err, logfile);
+		System.setOut(tee_stdout);
+		System.setErr(tee_stderr);
 		
 		MessageConsole mc = new MessageConsole(txtpnStartup);
-		
-		mc.redirectOut(Color.BLUE, tee_stdout);
-		mc.redirectErr(Color.RED, tee_stderr);
-		
-		log.warning("");
-		log.warning("= " + config.getApptitle());
-		log.warning("");
+		mc.redirectOut(Color.BLUE, System.out);
+		mc.redirectErr(Color.RED, System.err);
 	}
 
 	@Override

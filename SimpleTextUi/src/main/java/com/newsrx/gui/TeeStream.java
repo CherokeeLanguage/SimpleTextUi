@@ -1,26 +1,42 @@
 package com.newsrx.gui;
 
+import java.io.IOException;
 import java.io.PrintStream;
-/**
- * {@link http://stackoverflow.com/questions/1356706/copy-stdout-to-file-without-stopping-it-showing-onscreen}
- * @author michael
- *
- */
+
 public class TeeStream extends PrintStream {
-    PrintStream out;
-    public TeeStream(PrintStream out1, PrintStream out2) {
-        super(out1);
-        this.out = out2;
-    }
-    public void write(byte buf[], int off, int len) {
-        try {
-            super.write(buf, off, len);
-            out.write(buf, off, len);
-        } catch (Exception e) {
-        }
-    }
-    public void flush() {
-        super.flush();
-        out.flush();
-    }
+	private final PrintStream tee;
+
+	public TeeStream(PrintStream first, PrintStream tee) throws IOException {
+		super(first, true);
+		this.tee = tee;
+	}
+
+	@Override
+	public boolean checkError() {
+		return super.checkError() || tee.checkError();
+	}
+
+	@Override
+	public void close() {
+		super.close();
+		tee.close();
+	}
+
+	@Override
+	public void flush() {
+		super.flush();
+		tee.flush();
+	}
+
+	@Override
+	public void write(byte[] x, int o, int l) {
+		super.write(x, o, l);
+		tee.write(x, o, l);
+	}
+
+	@Override
+	public void write(int x) {
+		super.write(x);
+		tee.write(x);
+	}
 }
