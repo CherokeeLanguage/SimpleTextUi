@@ -1,20 +1,7 @@
 # SimpleTextUi
 
-Simple GUI for use in programs that just need to output progress information while processing.
+Simple GUI for use in programs that just need to output simple text progress information while running.
 
 [![Release](https://jitpack.io/v/michael-joyner/SimpleTextUi.svg)](https://jitpack.io/#michael-joyner/SimpleTextUi)
 
-To use this project as a Gradle dependency:
-```
-
-repositories {
-  jcenter()
-	maven { url "https://jitpack.io" }
-}
-
-dependencies {
-  compile 'com.github.michael-joyner:SimpleTextUi:20160731'
-}
-```
-
-For Maven, etc, visit https://jitpack.io/#michael-joyner/SimpleTextUi/20160731 for instructions.
+To use this project as a Gradle or Maven dependency: https://jitpack.io/#michael-joyner/SimpleTextUi
