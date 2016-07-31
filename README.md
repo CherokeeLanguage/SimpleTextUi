@@ -1,5 +1,5 @@
 # SimpleTextUi
-Simple GUI for use in programs that are mainly just need to output progress information while processing.
+Simple GUI for use in programs that just need to output progress information while processing.
 
 To use this project as a Gradle dependency:
 ```
