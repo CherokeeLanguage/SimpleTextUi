@@ -1,2 +1,2 @@
 # SimpleTextUi
-Simple GUI for use programs that are mainly just progress information while processing something.
+Simple GUI for use in programs that are mainly just need to output progress information while processing.
