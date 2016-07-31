@@ -10,7 +10,7 @@ repositories {
 }
 
 dependencies {
-  compile 'com.github.michael-joyner:SimpletextUi:20170731'
+  compile 'com.github.michael-joyner:SimpleTextUi:20170731'
 }
 ```
 
