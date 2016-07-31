@@ -14,4 +14,4 @@ dependencies {
 }
 ```
 
-For Maven, etc, visit https://jitpack.io/#michael-joyner/SimpleTextUi for instructions.
+For Maven, etc, visit https://jitpack.io/#michael-joyner/SimpleTextUi/20170731 for instructions.
