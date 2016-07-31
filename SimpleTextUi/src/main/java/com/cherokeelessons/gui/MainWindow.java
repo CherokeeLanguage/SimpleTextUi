@@ -64,8 +64,8 @@ public class MainWindow implements Runnable {
 	protected Logger log;
 
 	/**
-	 * Create the application.<br/>
-	 * Use: EventQueue.invokeLater(new MainWindow(config, args));
+	 * <p>Create the application.</p>
+	 * <p>Use: EventQueue.invokeLater(new MainWindow(config, args));</p>
 	 * 
 	 * @param args
 	 * @throws IOException 
