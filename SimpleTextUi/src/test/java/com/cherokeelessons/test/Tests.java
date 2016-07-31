@@ -11,8 +11,8 @@ import java.nio.file.attribute.BasicFileAttributes;
 
 import org.testng.annotations.Test;
 
-import com.newsrx.gui.MainWindow;
-import com.newsrx.gui.MainWindow.Config;
+import com.cherokeelessons.gui.MainWindow;
+import com.cherokeelessons.gui.MainWindow.Config;
 
 public class Tests {
 

@@ -2,8 +2,8 @@ package com.cherokeelessons.test;
 
 import java.util.logging.Logger;
 
-import com.newsrx.gui.MainWindow.Config;
-import com.newsrx.log.Log;
+import com.cherokeelessons.gui.MainWindow.Config;
+import com.cherokeelessons.log.Log;
 
 public class TestApp implements Runnable {
 	

@@ -1,4 +1,4 @@
-package com.newsrx.log;
+package com.cherokeelessons.log;
 
 import java.text.SimpleDateFormat;
 import java.util.TimeZone;

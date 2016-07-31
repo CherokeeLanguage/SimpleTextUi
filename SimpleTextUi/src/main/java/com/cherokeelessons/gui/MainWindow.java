@@ -1,4 +1,4 @@
-package com.newsrx.gui;
+package com.cherokeelessons.gui;
 
 import java.awt.BorderLayout;
 import java.awt.Color;

@@ -1,4 +1,4 @@
-package com.newsrx.gui;
+package com.cherokeelessons.gui;
 
 import java.awt.Color;
 import java.awt.Font;
