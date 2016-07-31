@@ -15,3 +15,5 @@ dependencies {
 ```
 
 For Maven, etc, visit https://jitpack.io/#michael-joyner/SimpleTextUi/20160731 for instructions.
+
+[![Release](https://jitpack.io/v/michael-joyner/SimpleTextUi.svg)](https://jitpack.io/#michael-joyner/SimpleTextUi)
