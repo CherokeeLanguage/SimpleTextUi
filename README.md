@@ -1,5 +1,8 @@
 # SimpleTextUi
+
 Simple GUI for use in programs that just need to output progress information while processing.
+
+[![Release](https://jitpack.io/v/michael-joyner/SimpleTextUi.svg)](https://jitpack.io/#michael-joyner/SimpleTextUi)
 
 To use this project as a Gradle dependency:
 ```
@@ -15,5 +18,3 @@ dependencies {
 ```
 
 For Maven, etc, visit https://jitpack.io/#michael-joyner/SimpleTextUi/20160731 for instructions.
-
-[![Release](https://jitpack.io/v/michael-joyner/SimpleTextUi.svg)](https://jitpack.io/#michael-joyner/SimpleTextUi)
