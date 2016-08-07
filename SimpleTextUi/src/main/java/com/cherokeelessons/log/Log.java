@@ -26,10 +26,9 @@ public class Log {
 			return getLogger();
 		}
 		if (!loggers.containsKey(tag)) {
-			System.err.println("!loggers.containsKey: "+tag);
 			Logger logger = Logger.getLogger(tag);
 			logger.setUseParentHandlers(false);
-			for (Handler handler: logger.getHandlers()) {
+			for (Handler handler : logger.getHandlers()) {
 				logger.removeHandler(handler);
 			}
 			ConsoleLogger err = new ConsoleLogger();
@@ -39,7 +38,7 @@ public class Log {
 			err.setFilter(new Filter() {
 				@Override
 				public boolean isLoggable(LogRecord r) {
-					return r.getLevel().intValue()>Level.INFO.intValue();
+					return r.getLevel().intValue() > Level.INFO.intValue();
 				}
 			});
 			logger.addHandler(err);
@@ -50,7 +49,7 @@ public class Log {
 			info.setFilter(new Filter() {
 				@Override
 				public boolean isLoggable(LogRecord r) {
-					return r.getLevel().intValue()<Level.WARNING.intValue();
+					return r.getLevel().intValue() < Level.WARNING.intValue();
 				}
 			});
 			logger.addHandler(info);
