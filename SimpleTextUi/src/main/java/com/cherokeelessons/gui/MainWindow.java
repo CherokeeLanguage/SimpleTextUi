@@ -70,7 +70,7 @@ public class MainWindow implements Runnable {
 	 * @param args
 	 * @throws IOException 
 	 */
-	public MainWindow(Config config, String... args) throws IOException {
+	public MainWindow(Config config, String... args) {
 		if (args != null) {
 			this.args = args;
 		} else {
@@ -116,7 +116,7 @@ public class MainWindow implements Runnable {
 	 * @throws FileNotFoundException
 	 * @throws UnsupportedEncodingException
 	 */
-	private void initialize() throws IOException {
+	private void initialize() {
 		Calendar cal = Calendar.getInstance();
 		Date today = cal.getTime();
 		SimpleDateFormat date_format = new SimpleDateFormat("yyyyMMdd-HHmm");
@@ -158,10 +158,13 @@ public class MainWindow implements Runnable {
 		frame.getContentPane().add(scrollPane, BorderLayout.CENTER);
 		scrollPane.setViewportView(txtpnStartup);
 		
-		TeeStream tee_stdout = new TeeStream(System.out, logfile);
-		TeeStream tee_stderr = new TeeStream(System.err, logfile);
-		System.setOut(tee_stdout);
-		System.setErr(tee_stderr);
+		try {
+			TeeStream tee_stdout = new TeeStream(System.out, logfile);
+			TeeStream tee_stderr = new TeeStream(System.err, logfile);
+			System.setOut(tee_stdout);
+			System.setErr(tee_stderr);
+		} catch (IOException e) {
+		}
 		
 		MessageConsole mc = new MessageConsole(txtpnStartup);
 		mc.redirectOut(Color.BLUE, System.out);
