@@ -1,12 +1,14 @@
 package com.cherokeelessons.gui;
 
-import java.io.IOException;
 import java.io.PrintStream;
 
+/**
+ * Based loosely on: {@link http://stackoverflow.com/questions/1356706/copy-stdout-to-file-without-stopping-it-showing-onscreen}
+ */
 public class TeeStream extends PrintStream {
 	private final PrintStream tee;
 
-	public TeeStream(PrintStream first, PrintStream tee) throws IOException {
+	public TeeStream(PrintStream first, PrintStream tee) {
 		super(first, true);
 		this.tee = tee;
 	}
