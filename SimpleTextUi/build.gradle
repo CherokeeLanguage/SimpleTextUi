@@ -1,17 +1,13 @@
-apply plugin: 'java'
+apply plugin: 'java-library'
 apply plugin: 'maven'
 apply plugin: 'eclipse-wtp'
 
 group = 'com.github.CherokeeLanguage'
-sourceCompatibility = 1.7
+sourceCompatibility = 1.8
 compileJava.options.encoding = 'UTF-8'
+compileTestJava.options.encoding = 'UTF-8'
 
-version '20160812'
-
-def RTJAR = '/usr/lib/jvm/java-7-openjdk-amd64/jre/lib/rt.jar';
-if (new File(RTJAR).exists()) {
-	compileJava.options.bootClasspath=RTJAR
-}
+version '20180903'
 
 tasks.eclipseWtp.dependsOn(cleanEclipseWtp)
 
@@ -105,14 +101,14 @@ eclipse {
 	}
 
 	jdt {
-		sourceCompatibility=1.7
-		targetCompatibility=1.7
+		sourceCompatibility=1.8
+		targetCompatibility=1.8
 	}
 
 	wtp {
 		facet {
 			facets = []
-			facet name: 'jst.java', version: '1.7'
+			facet name: 'jst.java', version: '1.8'
 		}
 	}
 }
