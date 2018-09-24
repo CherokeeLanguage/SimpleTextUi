@@ -42,23 +42,7 @@ public class MainWindow implements Runnable {
 
 		public File getReportPathFile() {
 			File f;
-			f = new File("F:\\JavaPrograms\\");
-			if (f.isDirectory()) {
-				return new File(f, "reports");
-			}
-			f = new File("E:\\JavaPrograms\\");
-			if (f.isDirectory()) {
-				return new File(f, "reports");
-			}
 			f = new File(System.getProperty("user.home", "") + "/JavaPrograms");
-			if (f.isDirectory()) {
-				return new File(f, "reports");
-			}
-			f = new File("F:\\");
-			if (f.isDirectory()) {
-				return new File(f, "reports");
-			}
-			f = new File("E:\\");
 			if (f.isDirectory()) {
 				return new File(f, "reports");
 			}
@@ -160,12 +144,12 @@ public class MainWindow implements Runnable {
 	 * @throws FileNotFoundException
 	 * @throws UnsupportedEncodingException
 	 */
+	@SuppressWarnings("resource")
 	private void initialize() {
 		GregorianCalendar cal = new GregorianCalendar();
 		Date today = cal.getTime();
 		SimpleDateFormat date_format = new SimpleDateFormat("yyyyMMdd-HHmm");
 
-		frame = new JFrame();
 
 		try {
 			String tag = config.getApptitle();
@@ -188,8 +172,18 @@ public class MainWindow implements Runnable {
 		} catch (UnsupportedEncodingException e) {
 			e.printStackTrace();
 			logfilestream = System.err;
-
 		}
+		
+		TeeStream tee_stdout = new TeeStream(System.out, logfilestream);
+		TeeStream tee_stderr = new TeeStream(System.err, logfilestream);
+
+		boolean headless=GraphicsEnvironment.isHeadless();
+
+		if (headless) {
+			return;
+		}
+		
+		frame = new JFrame();
 		GraphicsDevice gd = GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice();
 		int screen_width = gd.getDisplayMode().getWidth();
 		int width = screen_width * 90 / 100;
@@ -212,9 +206,6 @@ public class MainWindow implements Runnable {
 		});
 		scrollPane.setViewportView(txtpnStartup);
 
-		TeeStream tee_stdout = new TeeStream(System.out, logfilestream);
-		TeeStream tee_stderr = new TeeStream(System.err, logfilestream);
-
 		mc = new MessageConsole(txtpnStartup);
 
 		mc.redirectOut(Color.BLUE, tee_stdout);
@@ -224,10 +215,6 @@ public class MainWindow implements Runnable {
 		frame.validate();
 		frame.repaint();
 		frame.requestFocusInWindow();
-
-		log.info("");
-		log.info("= " + config.getApptitle());
-		log.info("");
 	}
 
 	protected MessageConsole mc;
