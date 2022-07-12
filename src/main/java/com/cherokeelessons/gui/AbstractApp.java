@@ -55,7 +55,10 @@ public abstract class AbstractApp implements Runnable {
             }
             config.running = false;
             if (config.isAutoExit()) {
-                System.exit(config.getStatusCode());
+                new Thread(()->{
+                    sleep(1000);
+                    System.exit(config.getStatusCode());
+                }).start();
             }
         } catch (Exception e) {
             config.statusCode = -1;
@@ -72,7 +75,10 @@ public abstract class AbstractApp implements Runnable {
             }
             config.running = false;
             if (config.isAutoExitOnError()) {
-                System.exit(config.getStatusCode());
+            	new Thread(()->{
+            		sleep(1000);
+                    System.exit(config.getStatusCode());
+                }).start();
             }
             throw new RuntimeException("FATAL ERROR");
         }
