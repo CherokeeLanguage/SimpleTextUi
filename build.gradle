@@ -1,0 +1,82 @@
+plugins {
+	id "java-library"
+	id "idea"
+	id "eclipse"
+	id "eclipse-wtp"
+	id "com.diffplug.eclipse.apt"
+	id 'com.github.johnrengelman.shadow'
+}
+
+compileJava.options.encoding = 'UTF-8'
+compileJava.options.release = 17
+
+compileTestJava.options.encoding = 'UTF-8'
+compileTestJava.options.release = 17
+
+java.toolchain.languageVersion = JavaLanguageVersion.of(17)
+java.toolchain.vendor = JvmVendorSpec.ADOPTOPENJDK
+
+repositories {
+    mavenCentral()
+	google()
+    maven { url "https://jitpack.io" }
+}
+
+configurations {
+  provided
+}
+
+dependencies {
+	testImplementation 'org.testng:testng:7.6.0'
+}
+ 
+sourceSets {
+  main {
+    compileClasspath += configurations.provided
+  }
+  test {
+    compileClasspath += configurations.provided
+    runtimeClasspath += configurations.provided
+  }
+}
+
+task "create-dirs" {
+	doLast{
+		sourceSets*.java.srcDirs*.each { it.mkdirs() }
+		sourceSets*.resources.srcDirs*.each { it.mkdirs() }
+	}}
+
+eclipseJdt {
+	doLast{
+		File f = file('.settings/org.eclipse.core.resources.prefs')
+		f.write('eclipse.preferences.version=1\n')
+		f.append('encoding/<project>=utf-8')
+		f = file('.settings/org.eclipse.core.runtime.prefs')
+		f.write('eclipse.preferences.version=1\n')
+		f.append('line.separator=\\n\n')
+	}}
+
+eclipse {
+	project {
+		name = 'SimpleTextUi'
+	}
+
+	classpath {
+		plusConfigurations += [configurations.provided]
+		downloadSources = true
+		downloadJavadoc = true
+	}
+
+	jdt {
+	}
+
+	wtp {
+		facet {
+		}
+	}
+}
+
+test {
+  useTestNG()
+  systemProperty 'debug', 'debug'
+}
