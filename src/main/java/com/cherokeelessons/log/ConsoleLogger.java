@@ -7,49 +7,50 @@ import java.util.logging.Level;
 import java.util.logging.LogRecord;
 
 class ConsoleLogger extends Handler {
-	private boolean useStdErr=false;
-	public boolean isUseStdErr() {
-		return useStdErr;
-	}
-	public void setUseStdErr(boolean useStdErr) {
-		this.useStdErr = useStdErr;
-	}
+    private boolean useStdErr = false;
+    private ErrorManager em = new ErrorManager() {
+        @Override
+        public synchronized void error(String msg, Exception ex, int code) {
+            super.error(msg, ex, code);
+            System.err.print(msg);
+            ex.printStackTrace(System.err);
+        }
+    };
 
-	public PrintStream out() {
-		return isUseStdErr()?System.err:System.out;
-	}
+    public ConsoleLogger() {
+        super();
+        setLevel(Level.ALL);
+        setErrorManager(em);
+    }
 
-	private ErrorManager em = new ErrorManager() {
-		@Override
-		public synchronized void error(String msg, Exception ex, int code) {
-			super.error(msg, ex, code);
-			System.err.print(msg);
-			ex.printStackTrace(System.err);
-		}
-	};
+    public boolean isUseStdErr() {
+        return useStdErr;
+    }
 
-	public ConsoleLogger() {
-		super();
-		setLevel(Level.ALL);
-		setErrorManager(em);
-	}
+    public void setUseStdErr(boolean useStdErr) {
+        this.useStdErr = useStdErr;
+    }
 
-	@Override
-	public void publish(LogRecord record) {
-		if (!isLoggable(record)) {
-			return;
-		}
-		out().print(getFormatter().format(record));
-		out().println();
-	}
+    public PrintStream out() {
+        return isUseStdErr() ? System.err : System.out;
+    }
 
-	@Override
-	public void flush() {
-		out().flush();
-	}
+    @Override
+    public void publish(LogRecord record) {
+        if (!isLoggable(record)) {
+            return;
+        }
+        out().print(getFormatter().format(record));
+        out().println();
+    }
 
-	@Override
-	public void close() throws SecurityException {
-		flush();
-	}
+    @Override
+    public void flush() {
+        out().flush();
+    }
+
+    @Override
+    public void close() throws SecurityException {
+        flush();
+    }
 }
